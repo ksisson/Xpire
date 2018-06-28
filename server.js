@@ -14,11 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-// Set Handlebars.
-var exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
 
 
 
