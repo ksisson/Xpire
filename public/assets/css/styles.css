@@ -1,0 +1,68 @@
+#navbar {
+    font-family: 'Poiret One', cursive;
+    font-size: 18pt; 
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+#mainWrapper {
+    margin-top: 50px; 
+    font-family: 'Poiret One';
+    font-weight: bold; 
+}
+
+#header {
+    margin:auto;  
+    font-family: 'Poiret One', cursive;
+    font-size: 50pt; 
+}
+
+#logHeader {
+    margin: auto; 
+    width: 50%; 
+    font-family: 'Poiret One', cursive;
+    font-size: 50pt; 
+    text-align: center;
+}
+
+#miniWrapper {
+    margin: auto; 
+    width: 500px; 
+}
+
+#input {
+    font-family: 'Roboto'; 
+    font-size: 20pt; 
+    
+}
+
+#submitButton {
+    margin-top:40px; 
+    font-weight: bolder; 
+     
+}
+
+#submit {
+    margin-top:40px; 
+    font-weight: bolder; 
+    
+}
+
+#login {
+    margin-top:40px; 
+    padding: 7px; 
+    float: left; 
+}
+
+#logInWrapper {
+    margin:auto; 
+    width: 300px; 
+    height:auto; 
+    border-radius: 25px;
+    border: 2px solid rgba(217, 223, 209, 0.445);
+    padding: 50px; 
+    box-shadow: 5px 5px 4px 4px rgba(153, 145, 145, 0.644);
+
+}
+
