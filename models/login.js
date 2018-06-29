@@ -14,6 +14,13 @@ module.exports = function(sequelize, DataTypes) {
           len: [1]
         }
       },
+      token: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1]
+        }
+      }
     });
 
     login.associate = function(models){
