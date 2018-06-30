@@ -58,11 +58,18 @@ $(document).ready(function() {
     }
   });
 
-
+  function getId(user){
+    $.get("/user/" + user.username, function(data){
+      console.log("ghgjghgjh");
+      // console.log(data.id);
+      localStorage.setItem("userid", data.id);
+    })
+  }
   // Submits a new post and brings user to blog page upon completion
   function createUser(User) {
-    $.post("/create", User, function() {
+    $.post("/create", User, function(User) {
         console.log("Creating Account!");
+        // getId(User);
         location.reload(true);
     }).fail(function(){
       alert("Username already exists!");
@@ -71,13 +78,16 @@ $(document).ready(function() {
 
 
   function verifyUser(User){
-    $.post("/login", User, function(){
+    $.post("/login", User, function(User){
       console.log("Veirfying data");
+      // getId(User);
       location.reload(true);
     }).fail(function(){
       alert("Could not authenticate. Check your username and password to see if they're correct");
     });
   }//end of verify user
+
+
 
   
 });

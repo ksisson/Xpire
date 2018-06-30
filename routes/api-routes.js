@@ -65,6 +65,18 @@ module.exports = function(app) {
    });
   });
 
+  //GET route find one on the login db to grab user id
+  app.get("/user/:username",function(req, res){
+    var currentUsername = req.params.username
+    db.login.findOne({
+      where: {username: currentUsername}
+    }).then(function(results){
+      console.log(results);
+    res.json(results);
+    })
+
+  });
+
   //POST route to login, will also check if the user exists
   app.post("/login", function(req,res){
     console.log("verify");
