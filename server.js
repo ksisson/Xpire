@@ -62,6 +62,7 @@ db.sequelize.sync().then(function() {
   });
 
 });
+<<<<<<< HEAD
 =======
 require("./routes/author-api-routes.js")(app);
 require("./routes/post-login-routes.js")(app);
@@ -74,3 +75,6 @@ db.sequelize.sync({ force: true }).then(function() {
   });
   
 >>>>>>> nedbranch1
+=======
+
+>>>>>>> 33de5cf5db4da20a8113d5a1c36cefc3f46ab8ce
