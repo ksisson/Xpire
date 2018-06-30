@@ -7,7 +7,8 @@
 $(document).ready(function() {
     $("#submitButton").on("click", function(){
         var food_name = $("#foodItem").val().trim()
-        var user_id = parseInt($("#user").attr("userId"))
+        var user_id = parseInt($("#user").attr("userId"));
+        console.log(user_id);
         
         $.get("/api/apis/" + food_name, function(data){
             console.log(data)
