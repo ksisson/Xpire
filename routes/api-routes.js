@@ -7,6 +7,7 @@
 
 // Requiring our Todo model
 var db = require("../models");
+var encrypt = require("../encryption.js");
 
 
 
@@ -42,9 +43,10 @@ module.exports = function(app) {
     if(newUser===true){
       //creation of token for cookies
       var userToken = "t" + Math.random();
+      var encryptedPassword = encrypt.encrypt(req.body.password);
       var newUser ={
         username: req.body.username,
-        password: req.body.password,
+        password: encryptedPassword,
         token: userToken
       }
       var userToken = "t" + Math.random();
@@ -55,7 +57,7 @@ module.exports = function(app) {
                 return res.redirect("/");
               });
     }else{
-      console.log("User already exist");
+      console.log("User already exists");
       return res.status(401).end();
       
     }
@@ -76,9 +78,13 @@ module.exports = function(app) {
       for (var i =0; i<users.length;i++){
         
         var tablePassword = users[i].password;
+        
         var tableUsername = users[i].username;
+
+        var deCryptPw = encrypt.decrypt(""+tablePassword);
+        
     
-        if(tableUsername ===req.body.username && tablePassword ===req.body.password){
+        if(tableUsername ===req.body.username && deCryptPw===req.body.password){
           var currentUser ={
             username: req.body.username,
             password: req.body.password,
