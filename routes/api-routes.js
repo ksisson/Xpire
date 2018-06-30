@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
@@ -114,12 +114,12 @@ module.exports = function(app) {
   
 
 
-};
+// };
 
 
-=======
-var db = require("../models");
-module.exports = function(app){
+
+// var db = require("../models");
+// module.exports = function(app){
     app.get("api/apis", function(req, res){
         db.api.findAll({}).then(function(dbapi){
             res.json(dbapi);
@@ -166,4 +166,4 @@ module.exports = function(app){
 
 
    
->>>>>>> nedbranch1
+
