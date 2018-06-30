@@ -11,14 +11,9 @@ var session = require("express-session");
 var exphbs = require("express-handlebars");
 
 
-<<<<<<< HEAD
-
 // Sets up the Express App
 // =============================================================
-=======
-var PORT = process.env.PORT || 8080;
-var db = require("./models");
->>>>>>> nedbranch1
+
 var app = express();
 var PORT = process.env.PORT || 8080;
 
@@ -52,7 +47,6 @@ app.use(express.static("public"));
 // =============================================================
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
-<<<<<<< HEAD
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -62,19 +56,3 @@ db.sequelize.sync().then(function() {
   });
 
 });
-<<<<<<< HEAD
-=======
-require("./routes/author-api-routes.js")(app);
-require("./routes/post-login-routes.js")(app);
-
-// Start our server so that it can begin listening to client requests.
-db.sequelize.sync({ force: true }).then(function() {
-    app.listen(PORT, function() {
-      console.log("App listening on PORT " + PORT);
-    });
-  });
-  
->>>>>>> nedbranch1
-=======
-
->>>>>>> 33de5cf5db4da20a8113d5a1c36cefc3f46ab8ce
