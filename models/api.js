@@ -16,8 +16,15 @@ module.exports = function(sequelize, DataTypes) {
       },
       category: {
           type: DataTypes.STRING,
-          allowedNull: false,
+          allowNull: false,
           validate: {len: [1]}
+      },
+      custom: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      user_id: {
+        type: DataTypes.INTEGER
       }
     });
 

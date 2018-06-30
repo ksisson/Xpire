@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate:{
+        validate: {
           len: [1]
         }
       }

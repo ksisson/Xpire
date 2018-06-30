@@ -1,3 +1,4 @@
+
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
@@ -52,7 +53,10 @@ module.exports = function(app) {
       var userToken = "t" + Math.random();
       res.cookie("token", userToken);
           db.login.create(newUser).then(function(results){
-                console.log("added");
+                
+                  //adding id to newUser to use on homepage
+                  newUser.id = results.dataValues.id;
+                  console.log("added");
                 req.session.user = newUser;
                 return res.redirect("/");
               });
@@ -88,7 +92,7 @@ module.exports = function(app) {
       var loopCheck = false;
       //loop to verify correct username and password
       for (var i =0; i<users.length;i++){
-        
+
         var tablePassword = users[i].password;
         
         var tableUsername = users[i].username;
@@ -98,6 +102,7 @@ module.exports = function(app) {
     
         if(tableUsername ===req.body.username && deCryptPw===req.body.password){
           var currentUser ={
+            id: users[i].id,
             username: req.body.username,
             password: req.body.password,
             token: req.body.token
@@ -131,6 +136,57 @@ module.exports = function(app) {
   
 
 
+// };
+
+
+
+// var db = require("../models");
+// module.exports = function(app){
+    app.get("/api/apis", function(req, res){
+        db.api.findAll({}).then(function(dbapi){
+            res.json(dbapi);
+        });
+    });
+    app.get("/api/apis/:food_name" , function(req, res){db.api.findOne({
+        where:
+        { item_name: req.params.food_name,
+            custom: false
+           }
+    }).then(function(dbapi){res.json(dbapi)
+    });
+});
+    app.post("/api/apis", function(req, res){db.api.create(req.body)
+        .then(function(dbapi){res.json(dbapi)});
+    });
+
+    app.delete("/api/apis/:id", function(req, res) {
+        db.api.destroy({
+          where: {
+            id: req.params.id
+          }
+        }).then(function(dbapi) {
+          res.json(dbapi);
+        });
+      });
+
+
+    app.post("/api/mastertable", function(req,res){
+        db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
+    });
+
+    app.get("/foodlist/:user_id"), function(req, res){db.mastertable.findAll({
+        
+        where:
+        {
+            loginId: req.params.user_id,
+      
+        },
+        include : [db.api]
+        .then(function(dbmastertable){})
+
+    })}
 };
 
+
+   
 
