@@ -51,7 +51,10 @@ module.exports = function(app) {
       var userToken = "t" + Math.random();
       res.cookie("token", userToken);
           db.login.create(newUser).then(function(results){
-                console.log("added");
+                
+                  //adding id to newUser to use on homepage
+                  newUser.id = results.dataValues.id;
+                  console.log("added");
                 req.session.user = newUser;
                 return res.redirect("/");
               });
@@ -75,12 +78,13 @@ module.exports = function(app) {
       var loopCheck = false;
       //loop to verify correct username and password
       for (var i =0; i<users.length;i++){
-        
+
         var tablePassword = users[i].password;
         var tableUsername = users[i].username;
     
         if(tableUsername ===req.body.username && tablePassword ===req.body.password){
           var currentUser ={
+            id: users[i].id,
             username: req.body.username,
             password: req.body.password,
             token: req.body.token

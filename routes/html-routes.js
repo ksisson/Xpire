@@ -16,12 +16,14 @@ module.exports = function(app) {
   // home route
 
   app.get("/", function(req, res) {
-    //if user is already logged in 
+    //if user is already logged in
+    // console.log(req.session.user); 
     if(req.session.user){
-      var userObject = {        
+      var userObject = { 
+          id: req.session.user.id,       
           username: req.session.user.username
       };
-      console.log(userObject);
+      
       res.render("welcome", userObject);
     }
     //if there is a cookie  
