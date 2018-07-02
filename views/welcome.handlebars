@@ -43,36 +43,39 @@
       
 
       <!-- displays the user's list of items -->
-      <div id="userList">
+      <div class= "container" id="userList">
 
        
-        <table style="width:100%">
+        <table>
           {{!-- "items" refers to  userObject.items, which was rendered in the html-routes.js file once the user is logged in--}}
 
           {{!-- conditional checks for items.length --}}
           {{#if items}} 
             <tr>
-              <th>item_name</th>
-              <th>Shelf_life</th> 
-              <th>Category</th>
+              
+                <th>Item Name</th>
+                <th>Shelf Life</th> 
+
+              
+              {{!-- <th>Category</th>
               <th>Custom</th>
               <th>user_id</th>
               <th>Created at</th>
-              <th>Updated at</th>
+              <th>Updated at</th> --}}
               
             </tr>
             {{!-- loops through the items array to show each user's item --}}
              {{#each items}}
             <tr>
               {{!-- items.item_name is displayed, etc etc --}}
-      
+              
               <td>{{item_name}}</td>
               <td>{{shelf_life}}</td>
-              <td>{{category}}</td>
+              {{!-- <td>{{category}}</td>
               <td>{{custom}}</td>
               <td>{{user_id}}</td>
               <td>{{createdAt}}</td>
-              <td>{{updatedAt}}</td>              
+              <td>{{updatedAt}}</td>               --}}
             </tr>
             {{/each}}
 
