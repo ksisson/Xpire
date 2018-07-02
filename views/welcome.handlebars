@@ -40,10 +40,56 @@
         </div>
       </div>
 
-      <!-- User list -->
+      
+
+      <!-- displays the user's list of items -->
       <div id="userList">
+
+       
+        <table style="width:100%">
+          {{!-- "items" refers to  userObject.items, which was rendered in the html-routes.js file once the user is logged in--}}
+
+          {{!-- conditional checks for items.length --}}
+          {{#if items}} 
+            <tr>
+              <th>item_name</th>
+              <th>Shelf_life</th> 
+              <th>Category</th>
+              <th>Custom</th>
+              <th>user_id</th>
+              <th>Created at</th>
+              <th>Updated at</th>
+              
+            </tr>
+            {{!-- loops through the items array to show each user's item --}}
+             {{#each items}}
+            <tr>
+              {{!-- items.item_name is displayed, etc etc --}}
+      
+              <td>{{item_name}}</td>
+              <td>{{shelf_life}}</td>
+              <td>{{category}}</td>
+              <td>{{custom}}</td>
+              <td>{{user_id}}</td>
+              <td>{{createdAt}}</td>
+              <td>{{updatedAt}}</td>              
+            </tr>
+            {{/each}}
+
+            {{else}}
+            <h2>Add an item</h2>
+          
+          {{/if}}
+           
+          </table>
+                
         
-          <div id="results-modal" class="modal fade" role="dialog">
+
+
+
+      </div>
+
+       <div id="results-modal" class="modal fade" role="dialog">
               <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -81,8 +127,6 @@
 
               </div>
             </div>
-
-      </div>
       
 
     </div>

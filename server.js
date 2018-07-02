@@ -36,7 +36,7 @@ app.use(session({
   secret: "whateverwewant",
   resave: false,
   saveUninitialized: true,
-  cookie: {secure: "auto", maxAge: 99999}
+  cookie: {secure: "auto", maxAge: 999999999}
 }));
 
 
@@ -50,7 +50,7 @@ require("./routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({}).then(function() {
+db.sequelize.sync().then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });

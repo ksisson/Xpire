@@ -71,7 +71,6 @@ module.exports = function(app) {
 
   //GET route find one on the login db to grab user id
   app.get("/user/:username",function(req, res){
-    console.log("route: GET /user/:username");
     var currentUsername = req.params.username
     db.login.findOne({
       where: {username: currentUsername}
@@ -149,41 +148,29 @@ module.exports = function(app) {
             res.json(dbapi);
         });
     });
-    app.get("/api/apis/:food_name" , function(req, res){
-      console.log("route GET: /api/apis/:food_name --" + req.params.food_name);      
-      //changed to a find all because the findOne method always returned
-      //null due to the "custom" for every user-added item being true, which allowed for the api table to have multiple entries 
-      //of the same item   
-
-      //add custom in the same way as findOne if it is to be used 
-      db.api.findAll({
-            where: {
-              item_name: req.params.food_name
-            }
-          }).then(function(results){
-            
-            res.json(results);
-          });
-
-    //   db.api.findOne({
-    //     where:
-    //     { item_name: req.params.food_name,
-    //         custom: false
-    //        }
-    // }).then(function(dbapi){
-    //   res.json(dbapi)
-    // });
+    app.get("/api/apis/:food_name" , function(req, res){db.api.findOne({
+        where:
+        { item_name: req.params.food_name,
+            custom: false
+           }
+    }).then(function(dbapi){res.json(dbapi)
+    });
 });
-    app.post("/api/apis", function(req, res){
-      console.log("route POST: /api/apis/");      
-       
+    app.post("/api/apis", function(req, res)
+    {
+      console.log("route GET: /api/apis/:food_name --" + req.params.food_name);
+      
       db.api.create(req.body)
-        .then(function(dbapi){res.json(dbapi)});
+        
+      .then(function(dbapi){
+        console.log("Return post");
+        console.log(dbapi);
+        res.json(dbapi)}
+      );
+
     });
 
     app.delete("/api/apis/:id", function(req, res) {
-      console.log("route delete: /api/apis/:id --" + req.params.id );      
-      
         db.api.destroy({
           where: {
             id: req.params.id
@@ -191,26 +178,21 @@ module.exports = function(app) {
         }).then(function(dbapi) {
           res.json(dbapi);
         });
-
-
       });
 
 
     app.post("/api/mastertable", function(req,res){
-      console.log("route post: /api/mastertable --");      
-          
+      console.log("route post: /api/mastertable");   
         db.mastertable.create(req.body).then(function(dbmastertable){
-          console.log(dbmastertable);
-          res.json(dbmastertable.dataValues);
+          res.json(dbmastertable)
         }).catch(function(err){
-          console.log("error");
-          return res.status(400).end();
-        })
+        console.log(err);
+        return res.status(400).end();
+      });
     });
 
     app.get("/foodlist/:user_id"), function(req, res){
       console.log("route delete: /foodlist/:user_id --" + req.params.user_id );      
-      
       db.mastertable.findAll({
         
         where:
