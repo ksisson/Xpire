@@ -174,17 +174,24 @@ module.exports = function(app) {
         db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
     });
 
-    app.get("/foodlist/:user_id"), function(req, res){db.mastertable.findAll({
+    app.get("/foodlist/:user_id", function(req, res){
+      db.mastertable.findAll({
         
         where:
         {
             loginId: req.params.user_id,
       
-        },
-        include : [db.api]
-        .then(function(dbmastertable){})
+        }
+      })
+        .then(function(dbmastertable){
+          for (var i = 0; i < dbmastertable.length; i++){
+            console.log(dbmastertable[i].dataValues)
+          }
+          
+          // res.render("welcome", dbmastertable)
+        })
 
-    })}
+    })
 };
 
 

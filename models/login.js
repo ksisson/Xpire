@@ -23,11 +23,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     });
 
-    // login.associate = function(models){
-    //     login.belongsToMany(models.api, {
-    //         through: "mastertable"
-    //     });
-    // };
+    login.associate = function(models){
+        login.belongsToMany(models.api, {
+            through: "mastertable"
+        });
+    };
 
     return login;
    };

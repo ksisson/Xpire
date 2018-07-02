@@ -35,6 +35,7 @@ $(document).ready(function() {
 
                         $.post("/api/mastertable", master_record).then(function(results){
                             console.log(results)
+                            printFoods(user_id)
                         })
                     })
                 })
@@ -46,6 +47,7 @@ $(document).ready(function() {
 
                 $.post("/api/mastertable", master_record).then(function(results){
                     console.log(results)
+                    printFoods(user_id)
                 })
             }
         });
@@ -54,9 +56,9 @@ $(document).ready(function() {
 
 });
 
-function printFoods(){
+function printFoods(user_id){
     $.get("/foodlist/" + user_id, function(data){
-
+        console.log(data)
     })
 }
 
