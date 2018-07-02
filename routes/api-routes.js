@@ -171,9 +171,9 @@ module.exports = function(app) {
 
 
     app.post("/api/mastertable", function(req,res){
-        db.mastertable.create(req.body).then(function(dbmastertable)
-        {res.json(dbmastertable)}
-      ).catch(function(err){
+        db.mastertable.create(req.body).then(function(dbmastertable){
+          res.json(dbmastertable)
+        }).catch(function(err){
         console.log("error");
         return res.status(400).end();
       });
