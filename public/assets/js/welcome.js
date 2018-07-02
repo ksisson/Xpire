@@ -46,7 +46,9 @@ $(document).ready(function() {
 
                 $.post("/api/mastertable", master_record).then(function(results){
                     console.log(results)
-                })
+                }).fail(function(){
+                    alert("This product is already on your list!");
+                  });
             }
         });
     });
