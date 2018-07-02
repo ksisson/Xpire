@@ -171,7 +171,12 @@ module.exports = function(app) {
 
 
     app.post("/api/mastertable", function(req,res){
-        db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
+        db.mastertable.create(req.body).then(function(dbmastertable)
+        {res.json(dbmastertable)}
+      ).catch(function(err){
+        console.log("error");
+        return res.status(400).end();
+      });
     });
 
     app.get("/foodlist/:user_id"), function(req, res){db.mastertable.findAll({
