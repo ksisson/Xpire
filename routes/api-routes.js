@@ -171,6 +171,7 @@ module.exports = function(app) {
 
 
     app.post("/api/mastertable", function(req,res){
+        
         db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
     });
 
@@ -184,15 +185,58 @@ module.exports = function(app) {
         }
       })
         .then(function(dbmastertable){
+          var foodlist = [];
+
+
           for (var i = 0; i < dbmastertable.length; i++){
-            console.log(dbmastertable[i].dataValues)
+            foodlist.push(dbmastertable[i].dataValues) 
           }
+
+          var count = 0;
+
+          for (let i = 0; i < foodlist.length; i++){
+            db.api.findOne({where: {id: foodlist[i].apiId}})
+            .then(function(results){
+              count += 1;
+              console.log(count, foodlist.length)
+              foodlist[i].name = results.dataValues.item_name
+              foodlist[i].expiration = getexpiration(results.dataValues.createdAt ,results.dataValues.shelf_life)
+              foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
+              if(count === foodlist.length){
+                res.json(foodlist)
+              }
+              
+              // console.log(results.dataValues.item_name)
+            })
+          }
+
+          // console.log(foodlist)
           
           // res.render("welcome", dbmastertable)
         })
 
     })
 };
+
+Date.prototype.addDays = function(days){
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function getexpiration(datestamp,shelflife){
+  var expiration = datestamp.addDays(shelflife);
+  return expiration
+}
+
+function getshelflife(expiration){
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date();
+  var secondDate = expiration
+
+  var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  return diffDays;
+}
 
 
    
