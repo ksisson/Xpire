@@ -14,55 +14,58 @@ $(document).ready(function() {
             console.log(data)
             if(data === null){
                 $("#results-modal").modal("toggle");
-                $("#modalSubmit").on("click", function(){
-                    var shelflife = parseInt($("#shelflife").val().trim())
-                    var category = $("#category").val()
-                    
-
-                    var api_addition = {
-                        item_name: food_name,
-                        shelf_life: shelflife,
-                        category: category,
-                        custom: true,
-                        user_id: user_id}
-                        
-
-                    $.post("/api/apis", api_addition, function(data){
-                        console.log(data)
-                        var master_record = {
-                            loginId: user_id,
-                            apiId: data.id}
-
-                        $.post("/api/mastertable", master_record).then(function(results){
-                            console.log(results);
-                            //reload page to show updated list
-                            location.reload(true);
-                        })
-                    })
-                })
+                
             }
             else{
+                
                 var master_record = {
                     loginId : user_id,
                     apiId: data.id}
 
                 $.post("/api/mastertable", master_record).then(function(results){
-                    console.log(results);
-                      //reload page to show updated list
-                      location.reload(true);
-                }).fail(function(){
-                    alert("This product is already on your list!");
-                  });
+                    console.log(results)
+                    printFoods(user_id)
+                    $("#foodItem").val("")
+                })
             }
         });
+        
     });
 
+    $("#modalSubmit").on("click", function(){
+        var food_name = $("#foodItem").val().trim()
+        var user_id = parseInt($("#user").attr("userId"));
+        var shelflife = parseInt($("#shelflife").val().trim())
+        var category = $("#category").val()
+        
+
+        var api_addition = {
+            item_name: food_name,
+            shelf_life: shelflife,
+            category: category,
+            custom: true,
+            user_id: user_id}
+            
+
+        $.post("/api/apis", api_addition, function(data){
+            console.log(data)
+            var master_record = {
+                loginId: user_id,
+                apiId: data.id}
+
+            $.post("/api/mastertable", master_record).then(function(results){
+                console.log(results)
+                printFoods(user_id)
+            })
+        })
+        $("#foodItem").val("")
+    })
 
 });
 
-function printFoods(){
+function printFoods(user_id){
     $.get("/foodlist/" + user_id, function(data){
-
+        console.log(data)
     })
 }
 

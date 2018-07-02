@@ -182,29 +182,72 @@ module.exports = function(app) {
 
 
     app.post("/api/mastertable", function(req,res){
-      console.log("route post: /api/mastertable");   
-        db.mastertable.create(req.body).then(function(dbmastertable){
-          res.json(dbmastertable)
-        }).catch(function(err){
-        console.log(err);
-        return res.status(400).end();
-      });
+        
+        db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
     });
 
-    app.get("/foodlist/:user_id"), function(req, res){
-      console.log("route delete: /foodlist/:user_id --" + req.params.user_id );      
+    app.get("/foodlist/:user_id", function(req, res){
       db.mastertable.findAll({
         
         where:
         {
             loginId: req.params.user_id,
       
-        },
-        include : [db.api]
-        .then(function(dbmastertable){})
+        }
+      })
+        .then(function(dbmastertable){
+          var foodlist = [];
 
-    })}
+
+          for (var i = 0; i < dbmastertable.length; i++){
+            foodlist.push(dbmastertable[i].dataValues) 
+          }
+
+          var count = 0;
+
+          for (let i = 0; i < foodlist.length; i++){
+            db.api.findOne({where: {id: foodlist[i].apiId}})
+            .then(function(results){
+              count += 1;
+              console.log(count, foodlist.length)
+              foodlist[i].name = results.dataValues.item_name
+              foodlist[i].expiration = getexpiration(results.dataValues.createdAt ,results.dataValues.shelf_life)
+              foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
+              if(count === foodlist.length){
+                res.json(foodlist)
+              }
+              
+              // console.log(results.dataValues.item_name)
+            })
+          }
+
+          // console.log(foodlist)
+          
+          // res.render("welcome", dbmastertable)
+        })
+
+    })
 };
+
+Date.prototype.addDays = function(days){
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function getexpiration(datestamp,shelflife){
+  var expiration = datestamp.addDays(shelflife);
+  return expiration
+}
+
+function getshelflife(expiration){
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date();
+  var secondDate = expiration
+
+  var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  return diffDays;
+}
 
 
    
