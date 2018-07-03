@@ -38,7 +38,6 @@
 }
 
 #submitButton {
-    margin-top:40px; 
     font-weight: bolder; 
      
 }
@@ -65,4 +64,37 @@
     box-shadow: 5px 5px 4px 4px rgba(153, 145, 145, 0.644);
 
 }
+
+#userList {
+    margin: auto; 
+    margin-top: 40px; 
+    width: 500px; 
+    /* border-style: groove;  */
+}
+
+/* table, th, td {
+    border: 1px solid black;
+ } */
+
+table {
+    width: 100%;
+}
+
+th {
+    height: 50px;
+    padding:15px; 
+    border-bottom: 1px solid #ddd; 
+    background-color: #18bb9c; 
+    color: white; 
+}
+
+td {
+    padding:15px; 
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {background-color: #dad2d28a;}
+
+
+
 
