@@ -1,40 +1,75 @@
-// $(".text-right").on("click", "#submitButton",function(){
-//     console.log("hello");
-//     $("#results-modal").modal("toggle");
-// })
-
 
 $(document).ready(function() {
+    var user_id = parseInt($("#user").attr("userId"));
     $("#submitButton").on("click", function(){
         var food_name = $("#foodItem").val().trim()
-        var user_id = parseInt($("#user").attr("userId"));
+        // var user_id = parseInt($("#user").attr("userId"));
         console.log(user_id);
         
         $.get("/api/apis/" + food_name, function(data){
-            console.log(data)
-            if(data === null){
-                $("#results-modal").modal("toggle");
-                
+            
+            console.log("Data: ");
+            console.log(data);
+            
+           
+            //if items is not in the database 
+        if(data.length === 0){
+           
+            $("#results-modal").modal("toggle");    
+        }
+         else{
+            //check will be used if an item with custom value true has already been added to the user 
+            var userCheck = false;
+            console.log("current user id"+ user_id);
+            for( var i = 0; i<data.length;i++){
+                console.log(data[i].user_id);
+                if(data[i].user_id ===user_id ){
+                    console.log("check is changed")
+                    userCheck=true;
+                }
+            }
+            if(userCheck===true){
+                alert("Item is already on your list!");
             }
             else{
-                
-                var master_record = {
-                    loginId : user_id,
-                    apiId: data.id}
+                if(data[0].custom ===false){
 
-                $.post("/api/mastertable", master_record).then(function(results){
-                    console.log(results)
-                    printFoods(user_id)
-                    $("#foodItem").val("")
-                })
+                    // var user_id = parseInt($("#user").attr("userId"));
+                    
+                    var master_record = {
+                        loginId : user_id,
+                        apiId: data[0].id}
+    
+                    $.post("/api/mastertable", master_record).then(function(results){
+                        console.log(results)
+                       
+                        location.reload(true);
+                        $("#foodItem").val("")
+                    }).fail(function(){
+                        alert("This product is already on your list!");
+                      });
+                }
+                else{
+                $("#results-modal").modal("toggle");
+                }
             }
+            
+            //if a user's entry info was added to the database directly
+            
+
+            //if a user has a specific item in their list, prevent from adding 
+                           
+        }
+           
+           
+          
         });
         
     });
 
     $("#modalSubmit").on("click", function(){
         var food_name = $("#foodItem").val().trim()
-        var user_id = parseInt($("#user").attr("userId"));
+        // var user_id = parseInt($("#user").attr("userId"));
         var shelflife = parseInt($("#shelflife").val().trim())
         var category = $("#category").val()
         
@@ -54,38 +89,15 @@ $(document).ready(function() {
                 apiId: data.id}
 
             $.post("/api/mastertable", master_record).then(function(results){
-                console.log(results)
-                printFoods(user_id)
+                console.log(results);
+                location.reload(true);
+              
             })
         })
-        $("#foodItem").val("")
+        
     })
 
 });
 
-function printFoods(user_id){
-    $.get("/foodlist/" + user_id, function(data){
-        console.log(data)
-    })
-}
 
-Date.prototype.addDays = function(days){
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-
-function getexpiration(datestamp,shelflife){
-    var expiration = datestamp.addDays(shelflife);
-    return expiration
-}
-
-function getshelflife(expiration){
-    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-    var firstDate = new Date();
-    var secondDate = expiration
-
-    var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-    return diffDays;
-}
 

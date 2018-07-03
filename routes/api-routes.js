@@ -50,7 +50,7 @@ module.exports = function(app) {
         password: encryptedPassword,
         token: userToken
       }
-      var userToken = "t" + Math.random();
+      
       res.cookie("token", userToken);
           db.login.create(newUser).then(function(results){
                 
@@ -72,7 +72,7 @@ module.exports = function(app) {
   //GET route find one on the login db to grab user id
   app.get("/user/:username",function(req, res){
     var currentUsername = req.params.username
-    db.login.findOne({
+    db.login.findAll({
       where: {username: currentUsername}
     }).then(function(results){
       console.log(results);
@@ -136,22 +136,16 @@ module.exports = function(app) {
   
 
 
-// };
-
-
-
-// var db = require("../models");
-// module.exports = function(app){
     app.get("/api/apis", function(req, res){
       console.log("route GET: /api/apis/");
         db.api.findAll({}).then(function(dbapi){
             res.json(dbapi);
         });
     });
-    app.get("/api/apis/:food_name" , function(req, res){db.api.findOne({
+    app.get("/api/apis/:food_name" , function(req, res){db.api.findAll({
         where:
-        { item_name: req.params.food_name,
-            custom: false
+        { item_name: req.params.food_name
+            // custom: false
            }
     }).then(function(dbapi){res.json(dbapi)
     });
@@ -164,7 +158,7 @@ module.exports = function(app) {
         
       .then(function(dbapi){
         console.log("Return post");
-        console.log(dbapi);
+        // console.log(dbapi);
         res.json(dbapi)}
       );
 
@@ -183,50 +177,13 @@ module.exports = function(app) {
 
     app.post("/api/mastertable", function(req,res){
         
-        db.mastertable.create(req.body).then(function(dbmastertable){res.json(dbmastertable)});
+        db.mastertable.create(req.body).then(function(dbmastertable){
+          res.json(dbmastertable)
+        }).catch(function(err){
+          console.log(err);
+          return res.status(400).end();
+        });
     });
-
-    app.get("/foodlist/:user_id", function(req, res){
-      db.mastertable.findAll({
-        
-        where:
-        {
-            loginId: req.params.user_id,
-      
-        }
-      })
-        .then(function(dbmastertable){
-          var foodlist = [];
-
-
-          for (var i = 0; i < dbmastertable.length; i++){
-            foodlist.push(dbmastertable[i].dataValues) 
-          }
-
-          var count = 0;
-
-          for (let i = 0; i < foodlist.length; i++){
-            db.api.findOne({where: {id: foodlist[i].apiId}})
-            .then(function(results){
-              count += 1;
-              console.log(count, foodlist.length)
-              foodlist[i].name = results.dataValues.item_name
-              foodlist[i].expiration = getexpiration(results.dataValues.createdAt ,results.dataValues.shelf_life)
-              foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
-              if(count === foodlist.length){
-                res.json(foodlist)
-              }
-              
-              // console.log(results.dataValues.item_name)
-            })
-          }
-
-          // console.log(foodlist)
-          
-          // res.render("welcome", dbmastertable)
-        })
-
-    })
 };
 
 Date.prototype.addDays = function(days){

@@ -52,13 +52,10 @@
           {{!-- conditional checks for items.length --}}
           {{#if items}} 
             <tr>
-              <th>item_name</th>
+              <th>Name</th>
               <th>Shelf_life</th> 
-              <th>Category</th>
-              <th>Custom</th>
-              <th>user_id</th>
-              <th>Created at</th>
-              <th>Updated at</th>
+              <th>expiration</th>
+            
               
             </tr>
             {{!-- loops through the items array to show each user's item --}}
@@ -66,13 +63,10 @@
             <tr>
               {{!-- items.item_name is displayed, etc etc --}}
       
-              <td>{{item_name}}</td>
-              <td>{{shelf_life}}</td>
-              <td>{{category}}</td>
-              <td>{{custom}}</td>
-              <td>{{user_id}}</td>
-              <td>{{createdAt}}</td>
-              <td>{{updatedAt}}</td>              
+              <td>{{name}}</td>
+              <td>{{shelflife}}</td>
+              <td>{{expiration}}</td>
+                    
             </tr>
             {{/each}}
 
