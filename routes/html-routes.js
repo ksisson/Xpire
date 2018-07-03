@@ -37,6 +37,7 @@ module.exports = function (app) {
 
 
           for (var i = 0; i < dbmastertable.length; i++) {
+            
             foodlist.push(dbmastertable[i].dataValues)
           }
           console.log("food list");
@@ -59,7 +60,7 @@ module.exports = function (app) {
                   count += 1;
                   // console.log(count, foodlist.length)
                   foodlist[i].name = results.dataValues.item_name
-                  foodlist[i].expiration = getexpiration(results.dataValues.createdAt, results.dataValues.shelf_life)
+                  foodlist[i].expiration = getexpiration(foodlist[i].createdAt, results.dataValues.shelf_life)
                   foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
                   foodlist[i].formattedexpiration = formattedexpiration(foodlist[i].expiration)
                   if (count === foodlist.length) {
