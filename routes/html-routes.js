@@ -59,6 +59,7 @@ module.exports = function(app) {
                 foodlist[i].name = results.dataValues.item_name
                 foodlist[i].expiration = getexpiration(results.dataValues.createdAt ,results.dataValues.shelf_life)
                 foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
+                foodlist[i].formattedexpiration = formattedexpiration(foodlist[i].expiration)
                 if(count === foodlist.length){
                   console.log("foodlist inside if: ");
                   userObject.items = foodlist;
@@ -113,6 +114,14 @@ function getshelflife(expiration){
 
   var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
   return diffDays;
+}
+
+function formattedexpiration(expiration){
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var d = expiration;
+  var formatted = days[d.getDay()] + " " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  return formatted;
 }
 
 
