@@ -1,129 +1,130 @@
 <!-- Nav Bar -->
-    <div id="navbar">
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-              <a class="nav-link active" id="user" href="#" userId="{{id}}" >Welcome, {{username}}</a>
-            </li>
-            {{!-- <li class="nav-item">
-              <a class="nav-link">Hello {{username}}</a>
-            </li> --}}
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Log Out</a>
-            </li>
-      </ul>
+<div id="navbar">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" id="user" href="#" userId="{{id}}">Welcome, {{username}}</a>
+    </li>
+    {{!--
+    <li class="nav-item">
+      <a class="nav-link">Hello {{username}}</a>
+    </li> --}}
+    <li class="nav-item">
+      <a class="nav-link" href="/logout">Log Out</a>
+    </li>
+  </ul>
+</div>
+
+<div class="container" id="mainWrapper">
+  <!-- Header -->
+  <div id="header">
+    <p class="text-success">Xpire
+      <i class="fab fa-pagelines"></i>
+
+    </p>
+  </div>
+
+  <div id="miniWrapper">
+    <!-- Input Field -->
+    <div id="input">
+      <h5>Food Item</h5>
+      <input type="text" id="foodItem" class="form-control" required>
+
+      </br>
+
+
     </div>
 
-    <div class= "container" id="mainWrapper">
-      <!-- Header -->
-      <div id="header">
-          <p class="text-success">Xpire<i class="fab fa-pagelines"></i>
+    <!-- Submit Button -->
+    <div class="text-right">
+      <button type="button" class="btn btn-outline-success" id="submitButton">Submit
+        <i class="far fa-arrow-alt-circle-up"></i>
 
-          </p>
-      </div>
+      </button>
+    </div>
+  </div>
 
-      <div id="miniWrapper">
-        <!-- Input Field -->
-        <div id="input">
-                <h5>Food Item</h5>
-                <input type="text" id="foodItem" class="form-control" required>
-          
-                </br>
-      
-                
+
+
+  <!-- displays the user's list of items -->
+  <div class="container" id="userList">
+
+
+    <table>
+      {{!-- "items" refers to userObject.items, which was rendered in the html-routes.js file once the user is logged in--}} {{!--
+      conditional checks for items.length --}} {{#if items}}
+      <tr>
+        <th>Name</th>
+        <th>Shelflife (Days)</th>
+        <th>Expiration</th>
+
+
+      </tr>
+      {{!-- loops through the items array to show each user's item --}} {{#each items}}
+      <tr>
+        {{!-- items.item_name is displayed, etc etc --}}
+
+        <td>{{name}}</td>
+        <td>{{shelflife}}</td>
+        <td>{{formattedexpiration}}</td>
+
+        <td>
+          <button class="delete" apiId="{{apiId}}" loginId="{{loginId}}"> Delete me</button>
+        </td>
+
+
+      </tr>
+      {{/each}} {{else}}
+      <h2>Add an item</h2>
+
+      {{/if}}
+
+    </table>
+
+
+
+
+
+  </div>
+
+  <div id="results-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content" id="modal">
+        <div class="modal-header">
+
+          <h2 class="modal-title">Item not found, please add!</h2>
+        </div>
+        <div class="modal-body">
+          <h5>Shelf Life</h5>
+          <input type="text" id="shelflife" class="form-control" required>
+
+          </br>
+
+          <h5>Category</h5>
+          <form>
+            <div class="form-group">
+
+              <select class="form-control" id="category">
+                <option>Produce</option>
+                <option>Meat</option>
+                <option>Dairy</option>
+                <option>Other</option>
+              </select>
+
             </div>
-  
-        <!-- Submit Button -->
-        <div class="text-right">
-            <button type="button" class="btn btn-outline-success" id="submitButton">Submit   <i class="far fa-arrow-alt-circle-up"></i>
-  
-            </button>
+          </form>
+          <button type="button" class="btn btn-outline-success" id="modalSubmit" data-dismiss="modal">Submit
+            <i class="far fa-arrow-alt-circle-up"></i>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
-      
-
-      <!-- displays the user's list of items -->
-      <div class= "container" id="userList">
-
-       
-        <table>
-          {{!-- "items" refers to  userObject.items, which was rendered in the html-routes.js file once the user is logged in--}}
-
-          {{!-- conditional checks for items.length --}}
-          {{#if items}} 
-            <tr>
-              <th>Name</th>
-              <th>Shelflife (Days)</th> 
-              <th>Expiration</th>
-            
-              
-            </tr>
-            {{!-- loops through the items array to show each user's item --}}
-             {{#each items}}
-            <tr>
-              {{!-- items.item_name is displayed, etc etc --}}
-      
-              <td>{{name}}</td>
-              <td>{{shelflife}}</td>
-              <td>{{formattedexpiration}}</td>
-              
-               <td><button class="delete"  apiId="{{apiId}}" loginId="{{loginId}}"> Delete me</button></td>
-
-                    
-            </tr>
-            {{/each}}
-
-            {{else}}
-            <h2>Add an item</h2>
-          
-          {{/if}}
-           
-          </table>
-                
-        
-
-
-
-      </div>
-
-       <div id="results-modal" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content" id="modal">
-                  <div class="modal-header">
-                   
-                    <h2 class="modal-title">Item not found, please add!</h2>
-                  </div>
-                  <div class="modal-body">
-                 <h5>Shelf Life</h5>
-                 <input type="text" id="shelflife" class="form-control" required>
-          
-                </br>
-      
-                <h5>Category</h5>
-                                <form>
-                                    <div class="form-group">
-                                      
-                                      <select class="form-control" id="category">
-                                        <option>Produce</option>
-                                        <option>Meat</option>
-                                        <option>Dairy</option>
-                                        <option>Other</option>
-                                      </select>
-                                      
-                                </div>
-                  </form>          
-                  <button type="button" class="btn btn-outline-success" id="modalSubmit" data-dismiss="modal">Submit   <i class="far fa-arrow-alt-circle-up"></i>
-                  
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-      
-
     </div>
+  </div>
+
+
+</div>
