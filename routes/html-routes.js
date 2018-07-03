@@ -65,6 +65,7 @@ module.exports = function (app) {
                   foodlist[i].formattedexpiration = formattedexpiration(foodlist[i].expiration)
                   if (count === foodlist.length) {
                     console.log("foodlist inside if: ");
+                    foodlist.sort(function(a, b){return a.shelflife - b.shelflife});
                     userObject.items = foodlist;
                     console.log(userObject.items);
                     res.render("welcome", userObject);
