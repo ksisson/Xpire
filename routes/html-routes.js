@@ -26,34 +26,54 @@ module.exports = function(app) {
           username: req.session.user.username
       };
       //retrieving all items from api array with the id of the session
-      db.api.findAll({
-        where:{
-            user_id: req.session.user.id
-        }
-      }).then(function(results){
-        console.log("==================================================");
-        var objectArray = [];
-        //pushing each item of table to an array
-        for (var i = 0;i<results.length;i++){
-          objectArray.push(results[i].dataValues);
-          if(i===results.length-1){
-            break;
-           }
-        }
-        //adds .items property that contains the array of item objects
-        userObject.items = objectArray;
-        for (var i=0;i<userObject.items.length;i++){
-         
-        }
-
-        console.log("Number of items retrieved from db call: "+ userObject.items.length);
-        console.log("items: ");
-        console.log(userObject.items);
+      db.mastertable.findAll({
         
-        res.render("welcome", userObject);
-      })
-
+        where:
+        {
+            loginId: req.session.user.id,
       
+        }
+      })
+        .then(function(dbmastertable){
+          var foodlist = [];
+
+
+          for (var i = 0; i < dbmastertable.length; i++){
+            foodlist.push(dbmastertable[i].dataValues) 
+          }
+          console.log("food list");
+          console.log(foodlist);
+
+          var count = 0;
+          
+          if(foodlist.length===0){
+            console.log("length of food list is 0")
+            res.render("welcome", userObject);
+          }else{
+
+            for (let i = 0; i < foodlist.length; i++){
+              db.api.findOne({where: {id: foodlist[i].apiId}})
+              .then(function(results){
+                count += 1;
+                // console.log(count, foodlist.length)
+                foodlist[i].name = results.dataValues.item_name
+                foodlist[i].expiration = getexpiration(results.dataValues.createdAt ,results.dataValues.shelf_life)
+                foodlist[i].shelflife = getshelflife(foodlist[i].expiration)
+                if(count === foodlist.length){
+                  console.log("foodlist inside if: ");
+                  userObject.items = foodlist;
+                  console.log(userObject.items);
+                  res.render("welcome", userObject);
+                  
+                  
+                };
+                
+              });
+            }
+
+          }    
+        
+      });
       
     }
     //if there is a cookie  
@@ -74,3 +94,27 @@ module.exports = function(app) {
 
 
 };
+
+Date.prototype.addDays = function(days){
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function getexpiration(datestamp,shelflife){
+  var expiration = datestamp.addDays(shelflife);
+  return expiration
+}
+
+function getshelflife(expiration){
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date();
+  var secondDate = expiration
+
+  var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  return diffDays;
+}
+
+
+   
+

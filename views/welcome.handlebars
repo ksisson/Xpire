@@ -52,6 +52,7 @@
           {{!-- conditional checks for items.length --}}
           {{#if items}} 
             <tr>
+<<<<<<< HEAD
               
                 <th>Item Name</th>
                 <th>Shelf Life</th> 
@@ -62,12 +63,19 @@
               <th>user_id</th>
               <th>Created at</th>
               <th>Updated at</th> --}}
+=======
+              <th>Name</th>
+              <th>Shelf_life</th> 
+              <th>expiration</th>
+            
+>>>>>>> final-display
               
             </tr>
             {{!-- loops through the items array to show each user's item --}}
              {{#each items}}
             <tr>
               {{!-- items.item_name is displayed, etc etc --}}
+<<<<<<< HEAD
               
               <td>{{item_name}}</td>
               <td>{{shelf_life}}</td>
@@ -76,6 +84,13 @@
               <td>{{user_id}}</td>
               <td>{{createdAt}}</td>
               <td>{{updatedAt}}</td>               --}}
+=======
+      
+              <td>{{name}}</td>
+              <td>{{shelflife}}</td>
+              <td>{{expiration}}</td>
+                    
+>>>>>>> final-display
             </tr>
             {{/each}}
 
