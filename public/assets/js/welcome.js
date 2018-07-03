@@ -17,49 +17,24 @@ $(document).ready(function() {
            
             $("#results-modal").modal("toggle");    
         }
-         else{
-            //check will be used if an item with custom value true has already been added to the user 
-            var userCheck = false;
-            console.log("current user id"+ user_id);
-            for( var i = 0; i<data.length;i++){
-                console.log(data[i].user_id);
-                if(data[i].user_id ===user_id ){
-                    console.log("check is changed")
-                    userCheck=true;
-                }
-            }
-            if(userCheck===true){
-                alert("Item is already on your list!");
-            }
-            else{
-                if(data[0].custom ===false){
-
-                    // var user_id = parseInt($("#user").attr("userId"));
-                    
-                    var master_record = {
-                        loginId : user_id,
-                        apiId: data[0].id}
-    
-                    $.post("/api/mastertable", master_record).then(function(results){
-                        console.log(results)
-                       
-                        location.reload(true);
-                        $("#foodItem").val("")
-                    }).fail(function(){
-                        alert("This product is already on your list!");
-                      });
-                }
-                else{
-                $("#results-modal").modal("toggle");
-                }
-            }
-            
-            //if a user's entry info was added to the database directly
-            
-
-            //if a user has a specific item in their list, prevent from adding 
-                           
+        else if(data[0].custom === true){
+            $("#results-modal").modal("toggle");
         }
+         else{
+            var master_record = {
+                            loginId : user_id,
+                            apiId: data[0].id}
+        
+                        $.post("/api/mastertable", master_record).then(function(results){
+                            console.log(results)
+                           
+                            location.reload(true);
+                            $("#foodItem").val("")
+                        }).fail(function(){alert("This product is already on your list!");
+                                      });
+
+             
+         }
            
            
           
@@ -95,9 +70,74 @@ $(document).ready(function() {
             })
         })
         
+    });
+
+    $(".delete").on("click", function(){
+        var user_id = $(this).attr("loginId")
+        var api_id = $(this).attr("apiId")
+        $.ajax({
+            type: "DELETE",
+            url: "/api/" + user_id + "/15/" + api_id + "/23423",
+            success: function(data){
+                console.log(data)
+                location.reload()
+            }
+        })
     })
 
 });
 
 
 
+
+
+
+
+
+
+
+
+
+
+            // //check will be used if an item with custom value true has already been added to the user 
+            // var userCheck = false;
+            // console.log("current user id"+ user_id);
+            // for( var i = 0; i<data.length;i++){
+            //     console.log(data[i].user_id);
+            //     if(data[i].user_id ===user_id ){
+            //         console.log("check is changed")
+            //         userCheck=true;
+            //     }
+            // }
+            // if(userCheck===true){
+            //     alert("Item is already on your list!");
+            // }
+            // else{
+            //     if(data[0].custom ===false){
+
+            //         // var user_id = parseInt($("#user").attr("userId"));
+                    
+            //         var master_record = {
+            //             loginId : user_id,
+            //             apiId: data[0].id}
+    
+            //         $.post("/api/mastertable", master_record).then(function(results){
+            //             console.log(results)
+                       
+            //             location.reload(true);
+            //             $("#foodItem").val("")
+            //         }).fail(function(){
+            //             alert("This product is already on your list!");
+            //           });
+            //     }
+            //     else{
+            //     $("#results-modal").modal("toggle");
+            //     }
+            // }
+            
+            // //if a user's entry info was added to the database directly
+            
+
+            // //if a user has a specific item in their list, prevent from adding 
+                           
+        

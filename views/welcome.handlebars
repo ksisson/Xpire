@@ -53,8 +53,8 @@
           {{#if items}} 
             <tr>
               <th>Name</th>
-              <th>Shelf_life</th> 
-              <th>expiration</th>
+              <th>Shelflife (Days)</th> 
+              <th>Expiration</th>
             
               
             </tr>
@@ -66,6 +66,8 @@
               <td>{{name}}</td>
               <td>{{shelflife}}</td>
               <td>{{expiration}}</td>
+               <td><button class="delete"  apiId="{{apiId}}" loginId="{{loginId}}"> Delete me</button></td>
+
                     
             </tr>
             {{/each}}

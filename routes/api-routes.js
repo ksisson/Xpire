@@ -164,10 +164,11 @@ module.exports = function(app) {
 
     });
 
-    app.delete("/api/apis/:id", function(req, res) {
-        db.api.destroy({
+    app.delete("/api/:user_id/15/:api_id/23423", function(req, res) {
+        db.mastertable.destroy({
           where: {
-            id: req.params.id
+            apiId: req.params.api_id,
+            loginId: req.params.user_id
           }
         }).then(function(dbapi) {
           res.json(dbapi);
