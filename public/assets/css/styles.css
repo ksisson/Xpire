@@ -7,6 +7,9 @@
     margin-bottom: 3%;
 }
 
+.text-right{
+    margin-right: 10px;
+}
 
 .exp-column{
     padding-right: 15px;
@@ -48,6 +51,8 @@
 #input {
     font-family: 'Roboto'; 
     font-size: 20pt; 
+    margin-left: 10px;
+    margin-right: 10px;
     
 }
 
