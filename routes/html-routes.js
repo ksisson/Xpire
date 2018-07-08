@@ -116,7 +116,7 @@ function getshelflife(expiration) {
   var firstDate = new Date();
   var secondDate = expiration
 
-  var diffDays = Math.ceil(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+  var diffDays = Math.ceil((secondDate.getTime() - firstDate.getTime()) / (oneDay));
   return diffDays;
 }
 
