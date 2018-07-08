@@ -1,33 +1,39 @@
 <!-- Nav Bar -->
-<div id="navbar">
-  <ul class="nav justify-content-center">
-    <li class="nav-item">
-      <a class="nav-link active" id="user" href="#" userId="{{id}}">Welcome, {{username}}</a>
-    </li>
-    {{!--
-    <li class="nav-item">
-      <a class="nav-link">Hello {{username}}</a>
-    </li> --}}
-    <li class="nav-item">
-      <a class="nav-link" href="/logout">Log Out</a>
-    </li>
-  </ul>
-</div>
+ <div id="navbar"  >
+    <ul class="nav  d-flex flex-row-reverse " >
+    
+      <li class="nav-item pull-right">
+        <a class="nav-link" href="/logout">Log Out</a>
+      </li>
+
+        <li class="nav-item ">
+        <a class="nav-link active" id="user" href="#" userId="{{id}}">Welcome, {{username}}</a>
+      </li>
+    </ul>
+ </div>
+
 
 <div class="container" id="mainWrapper">
+
+ 
+
+  
   <!-- Header -->
-  <div id="header">
-    <p class="text-success">Xpire
-      <i class="fab fa-pagelines"></i>
+  <div class="row">
+    <div id="header">
+      <p class="text-success">Xpire<i class="fab fa-pagelines"></i></p>
+    </div>
+  </div> <!-- end of row-->
 
-    </p>
-  </div>
 
-  <div id="miniWrapper">
+
+  <div class="row">
+  
+ <div id="miniWrapper">
     <!-- Input Field -->
     <div id="input">
-      <h5>Food Item</h5>
-      <input type="text" id="foodItem" class="form-control" required>
+      <h5>Insert a food item here:</h5>
+      <input type="text" id="foodItem" class="form-control" required placeholder="ex. eggs">
 
       </br>
 
@@ -54,10 +60,9 @@
       conditional checks for items.length --}} {{#if items}}
       <tr>
         <th>Name</th>
-        <th>Shelflife (Days)</th>
-        <th>Expiration</th>
+        <th>Shelflife</th>
+        <th class="exp-hd" class="exp-column">Expiration</th>
         
-        <th></th>
 
 
       </tr>
@@ -66,16 +71,16 @@
         {{!-- items.item_name is displayed, etc etc --}}
 
         <td>{{name}}</td>
-        <td>{{shelflife}}</td>
-        <td>{{formattedexpiration}}</td>
+        <td>{{shelflife}} days</td>
+        <td class="exp-column exp-hd">{{formattedexpiration}} <button class="delete btn btn-success" apiId="{{apiId}}" loginId="{{loginId}}"><i class="fas fa-minus"></i></button> </td>
         
-          <td><button class="delete btn btn-success" apiId="{{apiId}}" loginId="{{loginId}}"><i class="fas fa-minus"></i></button></td>
+   
         
 
 
       </tr>
       {{/each}} {{else}}
-      <h2>Add an item</h2>
+      <h2 id="empty-prompt">There are currently no items on your list!</h2>
 
       {{/if}}
 
@@ -128,6 +133,11 @@
 
     </div>
   </div>
+
+  </div> <!--End of row-->
+  
+
+ 
 
 
 </div>

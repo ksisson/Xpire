@@ -1,9 +1,23 @@
 #navbar {
     font-family: 'Poiret One', cursive;
     font-size: 18pt; 
-    position: fixed;
+    
     top: 0px;
     right: 0px;
+    margin-bottom: 3%;
+}
+
+
+.exp-column{
+    padding-right: 15px;
+}
+
+.delete{
+    margin-left: 3%;
+}
+
+#empty-prompt,.exp-hd{
+    text-align: center;
 }
 
 #mainWrapper {
@@ -63,6 +77,9 @@
     padding: 50px; 
     box-shadow: 5px 5px 4px 4px rgba(153, 145, 145, 0.644);
 
+}
+#user{
+    padding-left: 2rem;
 }
 
 #userList {
