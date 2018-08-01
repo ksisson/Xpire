@@ -29,16 +29,27 @@
 #miniWrapper {
     margin: auto; 
     width: 500px; 
+    
+    
 }
 
 #input {
+    margin: auto; 
+    width: 470px; 
     font-family: 'Roboto'; 
     font-size: 20pt; 
     
 }
 
+#userinput {
+    font-family: 'Roboto'; 
+    font-size: 20pt; 
+}
+
 #submitButton {
+    margin: auto; 
     font-weight: bolder; 
+    margin-right: 20px; 
      
 }
 
